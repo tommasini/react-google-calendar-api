@@ -177,14 +177,15 @@ var ApiCalendar = class {
         timeZone
       }
     };
-    return this.createEvent(event, calendarId);
+    return this.createEvent(event, 1, calendarId);
   }
-  createEvent(event, calendarId = this.calendar, sendUpdates = "none") {
+  createEvent(event, conferenceDataVersion = 0, calendarId = this.calendar, sendUpdates = "none") {
     if (gapi.client.getToken()) {
       return gapi.client.calendar.events.insert({
         calendarId,
         resource: event,
-        sendUpdates
+        sendUpdates,
+        conferenceDataVersion
       });
     } else {
       console.error("Error: this.gapi not loaded");

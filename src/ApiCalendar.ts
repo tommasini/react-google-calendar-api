@@ -208,7 +208,7 @@ class ApiCalendar {
       },
     };
 
-    return this.createEvent(event, calendarId);
+    return this.createEvent(event, 1, calendarId);
   }
 
   /**
