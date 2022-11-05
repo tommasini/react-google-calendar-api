@@ -1,10 +1,7 @@
-import {
-  ConfigApiCalendar,
-  TimeCalendarType,
-} from './type';
+import { ConfigApiCalendar, TimeCalendarType } from "./type";
 
-const scriptSrcGoogle = "https://accounts.google.com/gsi/client"
-const scriptSrcGapi = "https://apis.google.com/js/api.js"
+const scriptSrcGoogle = "https://accounts.google.com/gsi/client";
+const scriptSrcGapi = "https://apis.google.com/js/api.js";
 
 class ApiCalendar {
   tokenClient: google.accounts.oauth2.TokenClient | null = null;
@@ -223,6 +220,7 @@ class ApiCalendar {
    */
   public createEvent(
     event: { end: TimeCalendarType; start: TimeCalendarType },
+    conferenceDataVersion: number = 0,
     calendarId: string = this.calendar,
     sendUpdates: "all" | "externalOnly" | "none" = "none"
   ): any {
@@ -232,6 +230,7 @@ class ApiCalendar {
         resource: event,
         //@ts-ignore the @types/gapi.calendar package is not up to date(https://developers.google.com/calendar/api/v3/reference/events/insert)
         sendUpdates: sendUpdates,
+        conferenceDataVersion,
       });
     } else {
       console.error("Error: this.gapi not loaded");
@@ -324,7 +323,7 @@ class ApiCalendar {
    */
   createCalendar(summary: string): any {
     if (gapi) {
-      return gapi.client.calendar.calendars.insert({summary: summary});
+      return gapi.client.calendar.calendars.insert({ summary: summary });
     } else {
       console.error("Error: gapi is not loaded use onLoad before please.");
       return null;
